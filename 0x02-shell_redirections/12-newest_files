@@ -1,2 +1,2 @@
 #!/bin/bash
-ls -lt | awk 'NF{print $NF};NF==0{exit}' | tail -n 10
+ls -t | head
