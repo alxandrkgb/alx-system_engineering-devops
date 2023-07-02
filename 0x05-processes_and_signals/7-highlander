@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+# This script stops the 7-highlander process and displays "I am invincible!!!" when receiving a SIGTERM signal.
+
+# Find the PID of the 7-highlander process
+pid=$(pgrep -f "7-highlander")
+
+# Check if the process is running
+if [[ -n "$pid" ]]; then
+  # Function to handle SIGTERM signal
+  function handle_sigterm {
+    echo "I am invincible!!!"
+    # Stop the process gracefully
+    kill -SIGTERM "$pid"
+  }
+
+  echo "Stopping 7-highlander process..."
+  # Register the signal handler for SIGTERM
+  trap handle_sigterm SIGTERM
+
+  # Loop indefinitely
+  while true; do
+    echo "To infinity and beyond"
+    sleep 2
+  done
+else
+  echo "7-highlander process is not running"
+fi
