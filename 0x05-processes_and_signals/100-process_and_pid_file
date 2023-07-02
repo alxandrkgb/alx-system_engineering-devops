@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# This script displays "To infinity and beyond" indefinitely and handles signals.
+
+# Create the PID file
+echo $$ > /var/run/myscript.pid
+
+# Signal handler for SIGTERM
+term_handler() {
+  echo "I hate the kill command"
+  cleanup
+  exit 1
+}
+
+# Signal handler for SIGINT
+int_handler() {
+  echo "Y U no love me?!"
+}
+
+# Signal handler for SIGQUIT
+quit_handler() {
+  cleanup
+  exit 0
+}
+
+# Cleanup function
+cleanup() {
+  echo "Cleaning up..."
+  rm -f /var/run/myscript.pid
+}
+
+# Register signal handlers
+trap term_handler SIGTERM
+trap int_handler SIGINT
+trap quit_handler SIGQUIT
+
+# Display "To infinity and beyond" indefinitely
+while true; do
+  echo "To infinity and beyond"
+  sleep 1
+done
