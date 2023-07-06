@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Check if an argument is provided
+if [ $# -eq 0 ]; then
+  echo "Usage: $0 {IP_ADDRESS}"
+  exit 1
+fi
+
+# Extract the IP address from the argument
+ip_address=$1
+
+# Run ping command
+ping_output=$(ping -c 5 "$ip_address")
+
+# Print the ping output
+echo "$ping_output"
