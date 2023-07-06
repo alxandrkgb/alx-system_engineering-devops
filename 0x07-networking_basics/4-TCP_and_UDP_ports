@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# Run netstat command to get listening sockets
+netstat_output=$(netstat -tuln)
+
+# Print header
+echo "Active Internet connections (only servers)"
+echo "Proto Recv-Q Send-Q Local Address           Foreign Address         State       PID/Program name"
+
+# Process netstat output line by line
+while IFS= read -r line; do
+  # Check if the line represents a listening socket
+  if [[ $line == *LISTEN* ]]; then
+    # Extract the protocol, local address, and PID/Program name from the line
+    protocol=$(echo "$line" | awk '{print $1}')
+    local_address=$(echo "$line" | awk '{print $4}')
+    pid_program=$(echo "$line" | awk '{print $NF}')
+
+    # Print the details of the listening socket
+    echo "$protocol        $local_address       $pid_program"
+  fi
+done <<< "$netstat_output"
