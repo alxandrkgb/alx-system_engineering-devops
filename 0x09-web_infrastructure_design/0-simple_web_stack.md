@@ -1,6 +1,6 @@
 # Simple Web Stack
 
-![Web Infrastructure](https://imgur.com/5tVnJuc) 
+![Web Infrastructure](https://github.com/alxandrkgb/alx-system_engineering-devops/blob/master/0x09-web_infrastructure_design/0-simple_web_stack.jpg) 
 
 
 
