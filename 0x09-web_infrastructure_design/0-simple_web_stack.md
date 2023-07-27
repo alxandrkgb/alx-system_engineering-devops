@@ -1,6 +1,6 @@
 # Simple Web Stack
 
-![Web Infrastructure](https://imgur.com/5tVnJuc)
+![Web Infrastructure](https://imgur.com/5tVnJuc) 
 
 
 
