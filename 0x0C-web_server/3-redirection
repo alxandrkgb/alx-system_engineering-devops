@@ -1,0 +1,33 @@
+#!/usr/bin/env bash
+# This script configures Nginx for URL redirection.
+
+# Check if user is running as root
+if [ "$EUID" -ne 0 ]; then
+  echo "Please run this script as root."
+  exit 1
+fi
+
+# Install nginx with '-y' flag to automatically answer yes to prompts
+apt-get update
+apt-get install -y nginx
+
+# Create a redirection configuration file
+echo "
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name _;
+    
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}" > /etc/nginx/sites-available/redirect_me
+
+# Enable the redirection site
+ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
+
+# Remove default site configuration
+rm /etc/nginx/sites-enabled/default
+
+# Reload nginx configuration to apply changes
+nginx -s reload
