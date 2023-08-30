@@ -1,49 +1,24 @@
-# site.pp
+# Setup New Ubuntu server with nginx
 
-# Install Nginx package
+exec { 'update system':
+        command => '/usr/bin/apt-get update',
+}
+
 package { 'nginx':
-  ensure => 'installed',
+	ensure => 'installed',
+	require => Exec['update system']
 }
 
-# Configure Nginx
-file { '/etc/nginx/sites-available/default':
-  ensure => 'file',
-  content => "
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    root /var/www/html;
-    index index.html;
-
-    server_name _;
-
-    location / {
-        echo 'Hello World!';
-    }
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}
-",
+file {'/var/www/html/index.html':
+	content => 'Hello World!'
 }
 
-# Remove default Nginx site
-file { '/etc/nginx/sites-enabled/default':
-  ensure => 'absent',
+exec {'redirect_me':
+	command => 'sed -i "24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default',
+	provider => 'shell'
 }
 
-# Enable configured site
-file { '/etc/nginx/sites-enabled/':
-  ensure => 'directory',
-  recurse => true,
-  purge => true,
-}
-
-# Reload Nginx
-service { 'nginx':
-  ensure => 'running',
-  enable => true,
-  subscribe => File['/etc/nginx/sites-available/default'],
+service {'nginx':
+	ensure => running,
+	require => Package['nginx']
 }
