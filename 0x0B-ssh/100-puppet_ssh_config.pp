@@ -1,11 +1,12 @@
-file_line { 'Turn off passwd auth':
-  path   => '/etc/ssh/sshd_config',
-  line   => 'PasswordAuthentication no',
-  ensure => present,
-}
+#!/usr/bin/env bash
+# Automating my Tasks using Puppet
 
-file_line { 'Declare identity file':
-  path   => '/home/your_username/.ssh/config', # Replace 'your_username' with your actual username
-  line   => 'IdentityFile ~/.ssh/school',
-  ensure => present,
+file { '/etc/ssh/ssh_config':
+  ensure  => present,
+content => "
+    # SSH client configuration
+    Host *
+      IdentityFile ~/.ssh/school
+      PasswordAuthentication no
+  ",
 }
