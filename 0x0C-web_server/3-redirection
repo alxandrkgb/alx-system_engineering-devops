@@ -1,34 +1,20 @@
 #!/usr/bin/env bash
-# Script to configure Nginx redirection
+# Configure Nginx server so that /redirect_me is redirecting to another page
+# redirection must be a “301 Moved Permanently”
+# Include a custom 404 page that contains a string
+# By: Imanol Asolo
 
-# Update package lists
-apt-get update -y
+ADD301_REDIRECT="\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;"
+ADD404_NOTFOUND="\n\\terror_page 404 /404.html;\n\tlocation = /var/www/html/404.html {\n\t\tinternal;\n\t}"
+PATTERN="#error_page 404 /404.html;"
 
-# Install Nginx if not already installed
-if ! command -v nginx &> /dev/null; then
-    apt-get install nginx -y
-fi
 
-# Configure Nginx redirection
-echo 'server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-
-    server_name _;
-
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-
-    # Additional configuration for your server can go here
-
-}' > /etc/nginx/sites-available/redirect_me
-
-# Create a symbolic link to enable the site
-ln -s /etc/nginx/sites-available/redirect_me /etc/nginx/sites-enabled/
-
-# Remove default symlink to prevent conflicts
-rm -f /etc/nginx/sites-enabled/default
-
-# Restart Nginx to apply changes
-service nginx restart
+sudo apt-get update
+sudo apt-get install -y nginx
+sudo chown -R ubuntu /var/www
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sudo sed -i "30i $ADD301_REDIRECT" /etc/nginx/sites-available/default
+echo "Ceci n'est pas une page" > /var/www/html/404.html
+sudo sed -i "47i\ $PATTERN$ADD404_NOTFOUND" /etc/nginx/sites-available/default
+sudo service nginx restart
+sudo service nginx reload
