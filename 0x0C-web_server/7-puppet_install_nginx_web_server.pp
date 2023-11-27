@@ -1,39 +1,25 @@
-# Define the class for Nginx installation and configuration
-class nginx_server {
-  
-  package { 'nginx':
-    ensure => installed,
-  }
+# File:   7-puppet_install_nginx_web_server.pp
+# Author: Alex Orland Arévalo Tribaldos
+# email:  <3915@holbertonschool.com>
 
-  file { '/etc/nginx/sites-available/default':
-    content => "
-      server {
-        listen 80 default_server;
-        listen [::]:80 default_server;
+# Using Puppet| Install Nginx server, setup and configuration
 
-        root /var/www/html;
-        index index.html;
-
-        location / {
-          echo 'Hello World!';
-        }
-
-        location /redirect_me {
-          return 301 https://www.example.com/new_page;
-        }
-      }
-    ",
-    require => Package['nginx'],
-  }
-
-  service { 'nginx':
-    ensure  => running,
-    enable  => true,
-    require => File['/etc/nginx/sites-available/default'],
-  }
+package { 'nginx':
+  ensure => 'installed'
 }
 
-# Apply the nginx_server class to the node
-node '98.98.98.98' {
-  include nginx_server
+file { '/var/www/html/index.html':
+  content => 'Hello World',
+}
+
+file_line { 'redirection-301':
+  ensure => 'present',
+  path   => '/etc/nginx/sites-available/default',
+  after  => 'listen 80 default_server;',
+  line   => 'rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;',
+}
+
+service { 'nginx':
+  ensure  => running,
+  require => Package['nginx'],
 }
