@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 # Creates an RSA key pair
 
-ssh-keygen -t rsa -b 4096 -C "Generated key pair" -f ~/.ssh/school
+ssh-keygen -t rsa -b 4096 -C "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDape7fIkMQOVlBdJiWNJjsX4lL0CABpkyMf1qaPg19SBTzmq7zt76+pQzVC1RP82lwAeuQvEaAtmW8gT7iBs+ESTO50yLmNEwb4nolBX2MS5SH2F+4o/KBOgr34msTDCtLJXVs2t51b4JB3McR9INgfBOmLPCD8nYrxk4z8Mu9IM2H5J+HpN3bYN0pl6E4yveQWPFHnPXw532jttab7xr8ru8v6pM0n+jR5BrN9ktrzFZ+IzWAXHM5tFuq5kkSvVD1yeIlK238lfXCGsAJKZ85Dp9ISHnVN1Zv8QG2wT3A7ySeNufNNOW00hrYyuRSzK5JNXvERjVBKTdvNCOCA3TlJ/a1ytPRI0GVNPTD4mxL6MrXu3AjZIFDYB125r5DCbdgoBDQMCxHwE6CrvcXp/1UoV8NayfQtq8jgkvl3umR7YV30MPzBsG+cIC+QU0csl6ytbEZNmZDqAqY/jL5PVh/WBvZ3ARf9+KWM0NpbAzw8Qc/73G0T7yzfsMr2eCcQZcL9OkT+UoyEAlNyQ3Mem3J52gTpPe53zy2x9OG45e7biy/qcHs55GbNqNdWUkKUqOmfYTs3TOkan0r+4ovsthuYfL2fFdRc+oH+a4MeMZLCJliQhIg02jJY+T4KDO012Xc43msCjf5mJ0ac8ZyjRD0KmkL6msTRrCUX+tqJNVp4w== root@aa820ec1d5fe" -f ~/.ssh/school
