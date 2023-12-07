@@ -1,22 +1,17 @@
 #!/usr/bin/env bash
-# prints the informations about the subdomain
-
-print_sub ()
-{
-	dig "$2.$1" | grep -A1 'ANSWER SECTION' | tail -n 1 | awk -v var="$2" '{print "The subdomain " var " is a " $4 " record and points to", $5}'
-}
-
-SUB1="www"
-SUB2="lb-01"
-SUB3="web-01"
-SUB4="web-02"
-
-if [ -z "$2" ]
-then
-	print_sub "$1" "$SUB1"
-   	print_sub "$1" "$SUB2"
-   	print_sub "$1" "$SUB3"
-   	print_sub "$1" "$SUB4"
-else
-	print_sub "$1" "$2"
+# website
+if [ $# -eq 0 ]; then
+    exit
 fi
+sites=("www" "lb-01" "web-01" "web-02")
+if [ "$2" ]
+then
+    sites=("$2")
+fi
+for i in "${sites[@]}"
+do
+    first="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $1}'|cut -d '.' -f1)"
+    second="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $4}')"
+    third="$(dig $i."$1" | grep -A1 'ANSWER SECTION:'| tail -1 | awk '{print $5}')"
+    echo "The subdomain $first is a $second record and points to $third"
+done
