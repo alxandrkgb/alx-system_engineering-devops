@@ -9,11 +9,9 @@ if __name__ == '__main__':
     import requests
     from sys import argv
 
-    user_address = requests.get('https://jsonplaceholder.typicode.com/users/{}'
-                                .format(argv[1]))
+    user_address = requests.get(f'https://jsonplaceholder.typicode.com/users/{argv[1]}')
     name = user_address.json().get('name')
-    tod = requests.get('https://jsonplaceholder.typicode.com/todos?userId={}'
-                       .format(argv[1]))
+    tod = requests.get(f'https://jsonplaceholder.typicode.com/todos?userId={argv[1]}')
     request_data = tod.json()
     done = total = 0
     for task in request_data:
@@ -21,7 +19,8 @@ if __name__ == '__main__':
         if task.get('completed'):
             done += 1
 
+    print('Employee Name: {}'.format(name))
     print('Employee {} is done with tasks({}/{}):'.format(name, done, total))
     for task in request_data:
         if task.get('completed'):
-            print('\t {}'.format(task.get('title')))
+            print('\t{}'.format(task.get('title')))
