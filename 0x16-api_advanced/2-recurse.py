@@ -22,4 +22,3 @@ def recurse(subreddit, hot_list=[], after=""):
     after = resp.json().get("data").get("after")
     recurse(subreddit, hot_list, after)
     return hot_list
-
