@@ -44,9 +44,8 @@ At the end of this project, you are expected to be able to explain to anyone, wi
 
  ### Your servers
 Name	Username	IP	State	<br>
-128037-web-01	ubuntu	52.23.177.118	running	<br>
-128037-web-02	ubuntu	54.160.69.6	running	<br>
-128037-lb-01	ubuntu	54.90.12.103	running<br>
+230970-web-01	ubuntu	35.153.93.89	running	<br>
+230970-web-02	ubuntu	54.197.87.88	running	<br>
 
 ### Tasks
 ### 0. Sign up for Datadog and install datadog-agent
